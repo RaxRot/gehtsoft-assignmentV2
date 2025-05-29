@@ -1,92 +1,134 @@
-# Gehtsoft Technical Assessment Console App
+# Crypto Calculator
 
-This is a simple Java console application created as part of a technical assessment. It provides the following main features:
-
-- **Caesar Cipher** for encrypting and decrypting text (supports English and Russian alphabets)
-- **Arithmetic Expression Evaluator** using the exp4j library
-- **File input/output support** for Caesar operations
-- **Unit tests** for cipher and expression logic
+**Author:** RaxRot  
+**Project for:** Demonstration to Gehtsoft  
+**Tech:** Java 17+  
+**Features:** Caesar Cipher with Russian + English support, Math Expression Evaluator, File I/O, Console App
 
 ---
 
-## 🧠 Features
+## 📌 About
 
-### 1. Caesar Cipher
+This is a small Java console app combining two core features:
 
-- Supports both English and Russian characters
-- Preserves case (uppercase/lowercase)
-- Leaves digits, spaces, and punctuation untouched
-- Works with positive and negative shift values
-- Optional file input/output
+1. **Caesar Cipher** (encrypt/decrypt) — supports **English** and **Russian** alphabets  
+2. **Expression Calculator** — evaluates arithmetic expressions like `5 * (2 + 3)`
 
-### 2. Expression Evaluator
-
-- Supports common math operations: `+`, `-`, `*`, `/`, parentheses, decimals
-- Handles both positive and negative numbers
-- Uses the [`exp4j`](https://www.objecthunter.net/exp4j/) library
+The app was built for demo purposes by **RaxRot** for the company **Gehtsoft**.
 
 ---
 
-## 🚀 How to Run
+## 📖 Menu Options
 
-1. Compile and run the app using your IDE or with Maven:
-
-```bash
-mvn compile
-mvn exec:java -Dexec.mainClass="com.raxrot.Main"
-```
-
-2. Follow the menu prompts:
+When you launch the app, you’ll see:
 
 ```
-Welcome to Gehtsoft Technical Assessment
-
-Please choose an option:
-1. Caesar Cipher Encryption
-2. Caesar Cipher Decryption
-3. Arithmetic Expression Evaluation
-Your choice:
+Welcome in program Crypto calculator
+Main Menu:
+1. Encrypt
+2. Decrypt
+3. Calculate expression
+4. Exit
 ```
 
 ---
 
-## 📝 Example
+## 🔐 Caesar Cipher
 
-### Caesar Cipher (Manual)
+You can encrypt or decrypt using a shift (positive or negative).
 
-```
-Your choice: 1
-Choose text source:
-1. Enter manually
-2. Load from file
-Your choice: 1
-Enter text: Привет Мир
-Enter shift value: 5
-Result:
-Фхнжйч Снх
-```
+### ✅ Supports:
+- English (A–Z, a–z)
+- Russian (А–Я, а–я)
+- Mixed language texts
+- File or manual input
 
-### Expression Evaluation
+### 🔄 Example:
 
 ```
-Your choice: 3
-Enter expression: (3 + 2) * 4 - 6
-Result: 14.0
+Text: Hello
+Shift: 1
+Encrypted: Ifmmp
+```
+
+```
+Text: Привет
+Shift: 1
+Encrypted: Рсйгёу
 ```
 
 ---
 
-## 🧪 Unit Tests
+## 📂 File Mode
 
-Tests are included using JUnit:
+You can read input from a file and optionally save output.
 
-- `CaesarCipherTest` ensures encrypt/decrypt accuracy for both English and Russian
-- `ExpressionEvaluatorTest` verifies mathematical expression results including decimals and negatives
+### Example Flow:
 
-To run tests:
+```
+Choose input method:
+1.type
+2.read
+> 2
 
-```bash
-mvn test
+Enter file path:
+> input.txt
+
+Shift:
+> 5
+
+Save result to file? ([y]/[n])
+> y
+
+Enter output file path:
+> encrypted.txt
+```
+
+---
+
+## 🧮 Expression Evaluator
+
+Supports arithmetic operations:
+
+- `+`, `-`, `*`, `/`
+- Parentheses: `( )`
+- Negative numbers: `-24 + 3`
+
+### Example:
+
+```
+Input: 5 * (3 + 2)
+Output: 25.0
+```
+
+---
+
+## ✅ Unit Tests
+
+Basic tests for both features:
+
+- ✅ Caesar cipher encrypt/decrypt
+- ✅ Expression evaluation
+
+---
+
+## 📦 Dependencies
+
+### Maven
+
+```xml
+<dependency>
+    <groupId>net.objecthunter</groupId>
+    <artifactId>exp4j</artifactId>
+    <version>0.4.8</version>
+</dependency>
+
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.10.0</version>
+    <scope>test</scope>
+</dependency>
 ```
 
 ---
@@ -94,75 +136,17 @@ mvn test
 ## 📁 Project Structure
 
 ```
-src/
-├── com.raxrot/
-│   ├── Main.java
-│   ├── ceaser/
-│   │   ├── CaesarCipher.java
-│   │   └── CaesarFileHandler.java
-│   └── math/
-│       └── ExpressionEvaluator.java
-test/
-├── CaesarCipherTest.java
-└── ExpressionEvaluatorTest.java
+├── CaesarCipher.java            # Cipher logic
+├── CaesarFileHandler.java       # Read/write files
+├── ExpressionEvaluator.java     # Math expression calculator
+├── Main.java                    # Console menu and program loop
+├── CaesarCipherTest.java        # JUnit tests (cipher)
+├── ExpressionEvaluatorTest.java # JUnit tests (calculator)
 ```
 
 ---
 
-## ⚙️ Dependencies
+## 👨‍💻 Author
 
-Main dependency for expression parsing:
-
-```xml
-<dependency>
-  <groupId>net.objecthunter</groupId>
-  <artifactId>exp4j</artifactId>
-  <version>0.4.8</version>
-</dependency>
-```
-
-JUnit dependency for testing:
-
-```xml
-<dependency>
-  <groupId>org.junit.jupiter</groupId>
-  <artifactId>junit-jupiter</artifactId>
-  <version>5.10.0</version>
-  <scope>test</scope>
-</dependency>
-```
-
----
-
-## ✅ Done
-
-- [x] Caesar Cipher with file I/O support
-- [x] Expression evaluation using exp4j
-- [x] Clean, simple console interface
-- [x] Unit tests included
-- [x] Supports Russian and English alphabets
-
----
-
-## 📌 Author Notes
-
-This project is intentionally written to look human-made, including:
-- Slightly redundant logic
-- Simplified method names
-- Straightforward conditionals and flow
-
-Everything was implemented manually to simulate realistic coding practices.
-
----
-
-## 🧹 TODO (Optional)
-
-- Add support for custom alphabets
-- Include command-line args support
-- Add GUI interface
-
----
-
-## 📬 License
-
-Free to use and modify. No license required.
+Built by **RaxRot**  
+For demonstration to **Gehtsoft**
