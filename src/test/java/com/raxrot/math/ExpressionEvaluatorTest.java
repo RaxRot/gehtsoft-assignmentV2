@@ -11,5 +11,4 @@ class ExpressionEvaluatorTest {
         assertEquals(2, ExpressionEvaluator.evaluate("(5+20)-23"));
         assertEquals(3, ExpressionEvaluator.evaluate("5*6-30+3"));
     }
-
 }
