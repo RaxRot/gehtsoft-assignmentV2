@@ -6,122 +6,86 @@ import com.raxrot.math.ExpressionEvaluator;
 
 import java.io.IOException;
 import java.util.Scanner;
-
-/**
- * Main application class for the Gehtsoft technical assignment.
- * <p>
- * Provides a simple console interface to perform:
- * <ul>
- *     <li>Caesar Cipher encryption</li>
- *     <li>Caesar Cipher decryption</li>
- *     <li>Arithmetic expression evaluation</li>
- * </ul>
- */
 public class Main {
 
-    /**
-     * Entry point of the console application.
-     *
-     * @param args command-line arguments (not used)
-     */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to Gehtsoft Technical Assessment");
+        System.out.println("Welcome in program Crypto calculator");
 
-        // Show main menu
-        System.out.println("\nPlease choose an option:");
-        System.out.println("1. Caesar Cipher Encryption");
-        System.out.println("2. Caesar Cipher Decryption");
-        System.out.println("3. Arithmetic Expression Evaluation");
-        System.out.print("Your choice: ");
-        String choice = scanner.nextLine().trim();
-
-        switch (choice) {
-            case "1":
-                handleCaesar(true, scanner);
-                break;
-            case "2":
-                handleCaesar(false, scanner);
-                break;
-            case "3":
-                handleExpression(scanner);
-                break;
-            default:
-                System.out.println("Invalid choice.");
+        boolean running = true;
+        while (running) {
+            showMenu();
+            String option = scanner.nextLine();
+            switch (option) {
+                case "1":
+                    handleCipher(true, scanner);
+                    break;
+                case "2":
+                    handleCipher(false, scanner);
+                    break;
+                case "3":
+                    calculateExpression(scanner);
+                    break;
+                case "4":
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Error!");
+            }
         }
 
-        System.out.println("\nThank you for using the app. Goodbye!");
+        System.out.println("Bye!)");
+        scanner.close();
     }
 
-    /**
-     * Handles Caesar Cipher encryption or decryption.
-     *
-     * @param isEncryption true to encrypt, false to decrypt
-     * @param scanner      Scanner for user input
-     */
-    private static void handleCaesar(boolean isEncryption, Scanner scanner) {
-        try {
-            System.out.println("Choose text source:");
-            System.out.println("1. Enter manually");
-            System.out.println("2. Load from file");
-            System.out.print("Your choice: ");
-            String inputType = scanner.nextLine().trim();
+    private static void showMenu() {
+        System.out.println("Main Menu: \n1.Encrypt \n2.Decrypt \n3.Calculate expression \n4.Exit");
+    }
 
-            String inputText;
-            if (inputType.equals("1")) {
-                System.out.print("Enter text: ");
-                inputText = scanner.nextLine();
-            } else if (inputType.equals("2")) {
-                System.out.print("Enter file path: ");
+    // Handle encryption/decryption
+    private static void handleCipher(boolean isEncrypt, Scanner scanner) throws IOException {
+
+            System.out.println("input method: \n1.type \n2.read \nPlease choose");
+            String inputMethod = scanner.nextLine();
+
+            String text;
+            if (inputMethod.equals("1")) {
+                System.out.print("Enter text");
+                text = scanner.nextLine();
+            } else if (inputMethod.equals("2")) {
+                System.out.print("Peek file path");
                 String path = scanner.nextLine();
-                inputText = CaesarFileHandler.readFromFile(path);
-                System.out.println("File content:");
-                System.out.println(inputText);
+                text = CaesarFileHandler.readFileContent(path);
+                System.out.println("File content");
+                System.out.println(text);
             } else {
-                System.out.println("Invalid source.");
+                System.out.println("Error");
                 return;
             }
 
-            System.out.print("Enter shift value: ");
+            System.out.print("Shift");
             int shift = Integer.parseInt(scanner.nextLine());
 
-            String result = isEncryption
-                    ? CaesarCipher.encrypt(inputText, shift)
-                    : CaesarCipher.decrypt(inputText, shift);
-
-            System.out.println("Result:");
+            String result= isEncrypt?CaesarCipher.encrypt(text, shift):CaesarCipher.decrypt(text, shift);
+            System.out.println("result");
             System.out.println(result);
 
-            if (inputType.equals("2")) {
-                System.out.print("Save result to file? (y/n): ");
-                if (scanner.nextLine().trim().equalsIgnoreCase("y")) {
-                    System.out.print("Enter output file path: ");
+            if (inputMethod.equals("2")) {
+                System.out.print("Save result to file? ([y]/[n])");
+                String saveChoice = scanner.nextLine().toLowerCase();
+
+                if (saveChoice.equals("y")) {
                     String outPath = scanner.nextLine();
-                    CaesarFileHandler.writeToFile(outPath, result);
-                    System.out.println("Saved successfully.");
+                    CaesarFileHandler.saveToFile(outPath, result);
+                    System.out.println("saved to file");
                 }
             }
-
-        } catch (IOException e) {
-            System.out.println("File error: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid shift: must be a number.");
         }
-    }
 
-    /**
-     * Handles arithmetic expression evaluation using the ExpressionEvaluator.
-     *
-     * @param scanner Scanner for user input
-     */
-    private static void handleExpression(Scanner scanner) {
-        System.out.print("Enter expression: ");
-        String expr = scanner.nextLine();
-        try {
-            double result = ExpressionEvaluator.evaluate(expr);
-            System.out.println("Result: " + result);
-        } catch (Exception e) {
-            System.out.println("Invalid expression: " + e.getMessage());
-        }
+    private static void calculateExpression(Scanner scanner) {
+        System.out.print("Enter expression:");
+        String expression = scanner.nextLine();
+        double result = ExpressionEvaluator.evaluate(expression);
+        System.out.println("Result is: " + result);
     }
 }

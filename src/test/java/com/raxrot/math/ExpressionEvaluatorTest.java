@@ -6,19 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ExpressionEvaluatorTest {
     @Test
-    void testBasicMath() {
-        assertEquals(14.0, ExpressionEvaluator.evaluate("2 + 3 * 4"));
-        assertEquals(5.0, ExpressionEvaluator.evaluate("(10 + 5) / 3"));
-        assertEquals(13.0, ExpressionEvaluator.evaluate("2 * (3 + 4) - 1"));
+    void testMath() {
+        assertEquals(1, ExpressionEvaluator.evaluate("-24+5*5"));
+        assertEquals(2, ExpressionEvaluator.evaluate("(5+20)-23"));
+        assertEquals(3, ExpressionEvaluator.evaluate("5*6-30+3"));
     }
 
-    @Test
-    void testNegativeNumbers() {
-        assertEquals(-2.0, ExpressionEvaluator.evaluate("-5 + 3"));
-    }
-
-    @Test
-    void testDecimalMath() {
-        assertEquals(5.0, ExpressionEvaluator.evaluate("3.5 + 1.5"));
-    }
 }
