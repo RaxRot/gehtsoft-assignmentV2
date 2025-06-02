@@ -9,6 +9,7 @@ public class CaesarCipher {
     public static String encrypt(String text, int shift) {
         return processText(text, shift);
     }
+
     public static String decrypt(String text, int shift) {
         return processText(text, -shift);
     }
@@ -44,5 +45,25 @@ public class CaesarCipher {
             newPos += alphabet.length();
         }
         return alphabet.charAt(newPos);
+    }
+
+    public static void bruteForce(String text) {
+        System.out.println("All Results");
+        int maxShift = detectAlphabetLength(text);
+        for (int i = 1; i < maxShift; i++) {
+            String decryptText = decrypt(text, i);
+            System.out.println(decryptText);
+            System.out.println("<><><><><>");
+        }
+    }
+    private static int detectAlphabetLength(String text) {
+        for (char character : text.toCharArray()) {
+            if (RUS_LOWER.indexOf(character) >= 0||RUS_UPPER.indexOf(character)>= 0) {
+                return RUS_LOWER.length();
+            } else if (ENG_LOWER.indexOf(character) >= 0|| ENG_UPPER.indexOf(character)>= 0) {
+                return ENG_LOWER.length();
+            }
+        }
+        return RUS_LOWER.length();
     }
 }
