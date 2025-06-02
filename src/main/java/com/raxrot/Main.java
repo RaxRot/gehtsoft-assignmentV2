@@ -29,6 +29,9 @@ public class Main {
                 case "4":
                     running = false;
                     break;
+                case "5":
+                    bruteForce(scanner);
+                    break;
                 default:
                     System.out.println("Error!");
             }
@@ -39,7 +42,7 @@ public class Main {
     }
 
     private static void showMenu() {
-        System.out.println("Main Menu: \n1.Encrypt \n2.Decrypt \n3.Calculate expression \n4.Exit");
+        System.out.println("Main Menu: \n1.Encrypt \n2.Decrypt \n3.Calculate expression \n4.Exit \n5.Brute force");
     }
 
     // Handle encryption/decryption
@@ -87,5 +90,22 @@ public class Main {
         String expression = scanner.nextLine();
         double result = ExpressionEvaluator.evaluate(expression);
         System.out.println("Result is: " + result);
+    }
+    private static void bruteForce(Scanner scanner) throws IOException {
+        System.out.println("Brute force decrypt.Chose \n1-print \n2-read \nplease choose");
+        String myInput = scanner.nextLine();
+        String text;
+        if (myInput.equals("1")) {
+            System.out.print("Enter text");
+            text = scanner.nextLine();
+        } else if (myInput.equals("2")) {
+            System.out.print("Enter filePath");
+            String pathToFile = scanner.nextLine();
+            text = CaesarFileHandler.readFileContent(pathToFile);
+        } else {
+            System.out.println("Error");
+            return;
+        }
+        CaesarCipher.bruteForce(text);
     }
 }
